@@ -7,7 +7,7 @@
     <title>Pre-Work Assignment</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
 </head>
 
 <body>
@@ -15,10 +15,11 @@
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap" />
-                </svg>
+
                 <span class="fs-4">Pre-Work Assignment</span>
+                <div id="mainSpinner" class="spinner-border ms-2 text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </a>
 
             <ul id="mainMenu" class="nav nav-pills">
@@ -35,16 +36,16 @@
         </header>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="planet" role="tabpanel" aria-labelledby="home-tab">
-                <table id="planetTable" class="display" width="100%"></table>
+                <table id="planetTable" class="display table table-striped" width="100%"></table>
             </div>
             <div class="tab-pane fade" id="starship" role="tabpanel" aria-labelledby="starship-tab">
-                <table id="starshipTable" class="display" width="100%"></table>
+                <table id="starshipTable" class="display table table-striped" width="100%"></table>
             </div>
             <div class="tab-pane fade" id="vehicle" role="tabpanel" aria-labelledby="vehicle-tab">
-                <table id="vehicleTable" class="display" width="100%"></table>
+                <table id="vehicleTable" class="display table table-striped" width="100%"></table>
             </div>
             <div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
-                <table id="peopleTable" class="display" width="100%"></table>
+                <table id="peopleTable" class="display table table-striped" width="100%"></table>
             </div>
         </div>
         <div>
@@ -154,37 +155,45 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="planetInputName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" disabled id="planetInputName">
+                                        <label for="starshipInputName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputName">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="planetInputModel" class="form-label">Model</label>
-                                        <input type="text" class="form-control" disabled id="planetInputModel">
+                                        <label for="starshipInputStarshipClass" class="form-label">Starship
+                                            class</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="starshipInputStarshipClass">
                                     </div>
                                 </div>
-                                <div class="col-6">
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="planetInputRotationPeriod" class="form-label">Rotation
-                                            period</label>
-                                        <input type="text" class="form-control" disabled id="planetInputRotationPeriod">
+                                        <label for="starshipInputManufacturer" class="form-label">Manufacturer</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputManufacturer">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputOrbitalPeriod" class="form-label">Orbital period</label>
-                                        <input type="text" class="form-control" disabled id="planetInputOrbitalPeriod">
+                                        <label for="starshipInputCostInCredits" class="form-label">Cost in
+                                            credits</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="starshipInputCostInCredits">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputGravity" class="form-label">Gravity</label>
-                                        <input type="text" class="form-control" disabled id="planetInputGravity">
+                                        <label for="starshipInputLength" class="form-label">Length</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputLength">
                                     </div>
                                 </div>
                             </div>
@@ -192,14 +201,14 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputPopulation" class="form-label">Population</label>
-                                        <input type="text" class="form-control" disabled id="planetInputPopulation">
+                                        <label for="starshipInputCrew" class="form-label">Crew</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputCrew">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputClimate" class="form-label">Climate</label>
-                                        <input type="text" class="form-control" disabled id="planetInputClimate">
+                                        <label for="starshipInputPassengers" class="form-label">Passengers</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputPassengers">
                                     </div>
                                 </div>
                             </div>
@@ -207,16 +216,233 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputTerrain" class="form-label">Terrain</label>
-                                        <input type="text" class="form-control" disabled id="planetInputTerrain">
+                                        <label for="starshipInputMaxAtmospheringSpeed" class="form-label">Max
+                                            atmosphering speed</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="starshipInputMaxAtmospheringSpeed">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="planetInputSurfaceWater" class="form-label">Surface water</label>
-                                        <input type="text" class="form-control" disabled id="planetInputSurfaceWater">
+                                        <label for="starshipInputHyperdriveRating" class="form-label">Hyperdrive
+                                            rating</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="starshipInputHyperdriveRating">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="starshipInputMGLT" class="form-label">MGLT</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputMGLT">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="starshipInputCargoCapacity" class="form-label">Cargo
+                                            capacity</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="starshipInputCargoCapacity">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="starshipInputConsumables" class="form-label">Consumables</label>
+                                        <input type="text" class="form-control" disabled id="starshipInputConsumables">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="vehicleModal" tabindex="-1">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vehicle</h5>
+                        <div id="vehicleDialogSpinner" class="spinner-border ms-2 text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="vehicleForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputVehicleClass" class="form-label">Vehicle
+                                            class</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputVehicleClass">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputManufacturer" class="form-label">Manufacturer</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputManufacturer">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputCostInCredits" class="form-label">Cost in
+                                            credits</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputCostInCredits">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputLength" class="form-label">Length</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputLength">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputCrew" class="form-label">Crew</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputCrew">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputPassengers" class="form-label">Passengers</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputPassengers">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputMaxAtmospheringSpeed" class="form-label">Max
+                                            atmosphering speed</label>
+                                        <input type="text" class="form-control" disabled
+                                            id="vehicleInputMaxAtmospheringSpeed">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputCargoCapacity" class="form-label">Cargo
+                                            capacity</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputCargoCapacity">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="vehicleInputConsumables" class="form-label">Consumables</label>
+                                        <input type="text" class="form-control" disabled id="vehicleInputConsumables">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="peopleModal" tabindex="-1">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Person</h5>
+                        <div id="peopleDialogSpinner" class="spinner-border ms-2 text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="peopleForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="peopleInputName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputGender" class="form-label">Gender</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputGender">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputBirthYear" class="form-label">Birth year</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputBirthYear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputHeight" class="form-label">Height</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputHeight">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputMass" class="form-label">Mass</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputMass">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputHairColor" class="form-label">Hair color</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputHairColor">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputSkinColor" class="form-label">Skin color</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputSkinColor">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="peopleInputEyeColor" class="form-label">Eye color</label>
+                                        <input type="text" class="form-control" disabled id="peopleInputEyeColor">
+                                    </div>
+                                </div>
+
                             </div>
                         </form>
                         <div class="modal-footer">
@@ -227,10 +453,12 @@
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
         <script src="./app.js"></script>
 </body>
 

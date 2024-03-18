@@ -13,7 +13,12 @@ const App = (() => {
     table.rows.add(data);
     table.draw();
   };
-
+  showSpinner = () => {
+    $('#mainSpinner').show();
+  };
+  hideSpinner = () => {
+    $('#mainSpinner').hide();
+  };
   planet = {
     init: () => {
       $planet = $this.planet;
@@ -77,12 +82,14 @@ const App = (() => {
         });
     },
     fetch: () => {
+      $this.showSpinner();
       fetch('https://www.swapi.tech/api/planets?page=1&limit=99999')
         .then((res) => res.json())
         .then((data) => {
           $this.update($planetTable, data.results);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => $this.hideSpinner());
     },
   };
   starship = {
@@ -126,14 +133,17 @@ const App = (() => {
     },
     updateDialogForm: (data) => {
       $('#starshipInputName').val(data.name);
-      $('#starshipInputDiameter').val(data.diameter);
-      $('#starshipInputRotationPeriod').val(data.rotation_period);
-      $('#starshipInputOrbitalPeriod').val(data.orbital_period);
-      $('#starshipInputGravity').val(data.gravity);
-      $('#starshipInputPopulation').val(data.population);
-      $('#starshipInputClimate').val(data.climate);
-      $('#starshipInputTerrain').val(data.terrain);
-      $('#starshipInputSurfaceWater').val(data.surface_water);
+      $('#starshipInputStarshipClass').val(data.starship_class);
+      $('#starshipInputManufacturer').val(data.manufacturer);
+      $('#starshipInputCostInCredits').val(data.cost_in_credits);
+      $('#starshipInputLength').val(data.length);
+      $('#starshipInputPassengers').val(data.passengers);
+      $('#starshipInputCrew').val(data.crew);
+      $('#starshipInputMaxAtmospheringSpeed').val(data.max_atmosphering_speed);
+      $('#starshipInputHyperdriveRating').val(data.hyperdrive_rating);
+      $('#starshipInputMGLT').val(data.MGLT);
+      $('#starshipInputCargoCapacity').val(data.cargo_capacity);
+      $('#starshipInputConsumables').val(data.consumables);
       $starship.hideDialogSpinner();
     },
     fetchDetail: (id) => {
@@ -148,65 +158,167 @@ const App = (() => {
         });
     },
     fetch: () => {
+      $this.showSpinner();
       fetch('https://www.swapi.tech/api/starships?page=1&limit=99999')
         .then((res) => res.json())
         .then((data) => {
           $this.update($starshipTable, data.results);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => $this.hideSpinner());
     },
   };
-
   vehicle = {
     init: () => {
-      $this.vehicle.table = new DataTable('#vehicleTable', {
+      $vehicle = $this.vehicle;
+      $vehicle.setupTable();
+      $vehicle.setupMenu();
+    },
+    setupTable: () => {
+      $vehicleTable = new DataTable('#vehicleTable', {
         columns: [
           { title: 'Id', data: 'uid' },
           { title: 'Name', data: 'name' },
         ],
         data: [],
       });
+
+      $vehicleTable.on('click', 'tbody tr', function () {
+        let data = $vehicleTable.row(this).data();
+        $this.vehicle.clearDialogForm();
+        $this.vehicle.showDialogSpinner();
+        $this.vehicle.fetchDetail(data.uid);
+
+        $('#vehicleModal').modal('show');
+      });
+    },
+    setupMenu: () => {
       var triggerEl = document.querySelector('#mainMenu a[href="#vehicle"]');
-      triggerEl.addEventListener('click', function (event) {
+      triggerEl.addEventListener('click', function (_) {
         $this.vehicle.fetch();
       });
     },
+    clearDialogForm: () => {
+      $('#vehicleForm').trigger('reset');
+    },
+    showDialogSpinner: () => {
+      $('#vehicleDialogSpinner').show();
+    },
+    hideDialogSpinner: () => {
+      $('#vehicleDialogSpinner').hide();
+    },
+    updateDialogForm: (data) => {
+      $('#vehicleInputName').val(data.name);
+      $('#vehicleInputVehicleClass').val(data.vehicle_class);
+      $('#vehicleInputManufacturer').val(data.manufacturer);
+      $('#vehicleInputCostInCredits').val(data.cost_in_credits);
+      $('#vehicleInputLength').val(data.length);
+      $('#vehicleInputPassengers').val(data.passengers);
+      $('#vehicleInputCrew').val(data.crew);
+      $('#vehicleInputMaxAtmospheringSpeed').val(data.max_atmosphering_speed);
+      $('#vehicleInputCargoCapacity').val(data.cargo_capacity);
+      $('#vehicleInputConsumables').val(data.consumables);
+      $vehicle.hideDialogSpinner();
+    },
+    fetchDetail: (id) => {
+      fetch(`https://www.swapi.tech/api/vehicles/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          $vehicle.updateDialogForm(data.result.properties);
+        })
+        .catch((err) => {
+          console.error(err);
+          $vehicle.hideDialogSpinner();
+        });
+    },
     fetch: () => {
+      $this.showSpinner();
       fetch('https://www.swapi.tech/api/vehicles?page=1&limit=99999')
         .then((res) => res.json())
         .then((data) => {
-          $this.update($this.vehicle.table, data.results);
+          $this.update($vehicleTable, data.results);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => $this.hideSpinner());
     },
   };
   people = {
     init: () => {
-      $this.people.table = new DataTable('#peopleTable', {
+      $people = $this.people;
+      $people.setupTable();
+      $people.setupMenu();
+    },
+    setupTable: () => {
+      $peopleTable = new DataTable('#peopleTable', {
         columns: [
           { title: 'Id', data: 'uid' },
           { title: 'Name', data: 'name' },
         ],
         data: [],
       });
+
+      $peopleTable.on('click', 'tbody tr', function () {
+        let data = $peopleTable.row(this).data();
+        $this.people.clearDialogForm();
+        $this.people.showDialogSpinner();
+        $this.people.fetchDetail(data.uid);
+
+        $('#peopleModal').modal('show');
+      });
+    },
+    setupMenu: () => {
       var triggerEl = document.querySelector('#mainMenu a[href="#people"]');
-      triggerEl.addEventListener('click', function (event) {
+      triggerEl.addEventListener('click', function (_) {
         $this.people.fetch();
       });
     },
+    clearDialogForm: () => {
+      $('#peopleForm').trigger('reset');
+    },
+    showDialogSpinner: () => {
+      $('#peopleDialogSpinner').show();
+    },
+    hideDialogSpinner: () => {
+      $('#peopleDialogSpinner').hide();
+    },
+    updateDialogForm: (data) => {
+      $('#peopleInputName').val(data.name);
+      $('#peopleInputGender').val(data.gender);
+      $('#peopleInputBirthYear').val(data.birth_year);
+      $('#peopleInputHeight').val(data.height);
+      $('#peopleInputMass').val(data.mass);
+      $('#peopleInputHairColor').val(data.hair_color);
+      $('#peopleInputSkinColor').val(data.skin_color);
+      $('#peopleInputEyeColor').val(data.eye_color);
+      $people.hideDialogSpinner();
+    },
+    fetchDetail: (id) => {
+      fetch(`https://www.swapi.tech/api/people/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          $people.updateDialogForm(data.result.properties);
+        })
+        .catch((err) => {
+          console.error(err);
+          $people.hideDialogSpinner();
+        });
+    },
     fetch: () => {
+      $this.showSpinner();
       fetch('https://www.swapi.tech/api/people?page=1&limit=99999')
         .then((res) => res.json())
         .then((data) => {
-          $this.update($this.people.table, data.results);
+          $this.update($peopleTable, data.results);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => $this.hideSpinner());
     },
   };
   return {
     init,
     starship,
     planet,
+    vehicle,
   };
 })();
 
